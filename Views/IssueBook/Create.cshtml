@@ -1,0 +1,60 @@
+﻿@model LibraryManagementSystem.Models.IssueBook
+
+@{
+    ViewData["Title"] = "Issue Book";
+}
+
+<div class="container mt-4">
+
+    <h2 class="text-success mb-4">📖 Issue Book</h2>
+
+    <form asp-action="Create" method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Select Student</label>
+            <select asp-for="StudentId" class="form-control">
+                <option value="">-- Select Student --</option>
+                @foreach (var s in ViewBag.Students)
+                {
+                    <option value="@s.StudentId">@s.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Select Book</label>
+            <select asp-for="BookId" class="form-control">
+                <option value="">-- Select Book --</option>
+                @foreach (var b in ViewBag.Books)
+                {
+                    <option value="@b.BookId">@b.Title</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Issue Date</label>
+            <input asp-for="IssueDate" type="date" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Due Date</label>
+            <input asp-for="DueDate" type="date" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Status</label>
+            <input asp-for="Status" class="form-control" value="Issued" readonly />
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            📚 Issue Book
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Back
+        </a>
+
+    </form>
+
+</div>

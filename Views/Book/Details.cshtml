@@ -1,0 +1,86 @@
+﻿@model LibraryManagementSystem.Models.Book
+
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<div class="container mt-4">
+
+    <h2 class="text-info mb-4">Book Details</h2>
+
+    <table class="table table-bordered">
+
+        <tr>
+            <th width="250">Title</th>
+            <td>@Model.Title</td>
+        </tr>
+
+        <tr>
+            <th>Author</th>
+            <td>@Model.Author</td>
+        </tr>
+
+        <tr>
+            <th>ISBN</th>
+            <td>@Model.ISBN</td>
+        </tr>
+
+        <tr>
+            <th>Category</th>
+            <td>@Model.Category</td>
+        </tr>
+
+        <tr>
+            <th>Publisher</th>
+            <td>@Model.Publisher</td>
+        </tr>
+
+        <tr>
+            <th>Edition</th>
+            <td>@Model.Edition</td>
+        </tr>
+
+        <tr>
+            <th>Language</th>
+            <td>@Model.Language</td>
+        </tr>
+
+        <tr>
+            <th>Quantity</th>
+            <td>@Model.Quantity</td>
+        </tr>
+
+        <tr>
+            <th>Available Quantity</th>
+            <td>@Model.AvailableQuantity</td>
+        </tr>
+
+        <tr>
+            <th>Shelf No</th>
+            <td>@Model.ShelfNo</td>
+        </tr>
+
+        <tr>
+            <th>Status</th>
+            <td>@Model.Status</td>
+        </tr>
+
+        <tr>
+            <th>Created Date</th>
+            <td>@Model.CreatedDate</td>
+        </tr>
+
+    </table>
+
+    <a asp-action="Edit"
+       asp-route-id="@Model.BookId"
+       class="btn btn-warning">
+        Edit
+    </a>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Back
+    </a>
+
+</div>

@@ -1,0 +1,90 @@
+﻿@model LibraryManagementSystem.Models.Book
+
+@{
+    ViewData["Title"] = "Add New Book";
+}
+
+<div class="container mt-4">
+
+    <h2 class="text-primary mb-4">Add New Book</h2>
+
+    <form asp-action="Create" method="post">
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Author" class="form-label"></label>
+            <input asp-for="Author" class="form-control" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ISBN" class="form-label"></label>
+            <input asp-for="ISBN" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Category" class="form-label"></label>
+            <input asp-for="Category" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Publisher" class="form-label"></label>
+            <input asp-for="Publisher" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Edition" class="form-label"></label>
+            <input asp-for="Edition" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Language" class="form-label"></label>
+            <input asp-for="Language" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Quantity" class="form-label"></label>
+            <input asp-for="Quantity" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AvailableQuantity" class="form-label"></label>
+            <input asp-for="AvailableQuantity" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ShelfNo" class="form-label"></label>
+            <input asp-for="ShelfNo" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label"></label>
+            <select asp-for="Status" class="form-select">
+                <option>Available</option>
+                <option>Unavailable</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Save Book
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Back
+        </a>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

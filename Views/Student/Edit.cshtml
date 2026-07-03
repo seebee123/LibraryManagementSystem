@@ -1,0 +1,65 @@
+﻿@model LibraryManagementSystem.Models.Student
+
+@{
+    ViewData["Title"] = "Edit Student";
+}
+
+<div class="container mt-4">
+
+    <h2 class="text-primary mb-4">✏️ Edit Student</h2>
+
+    <form asp-action="Edit">
+
+        <input type="hidden" asp-for="StudentId" />
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="RollNo" class="form-label"></label>
+            <input asp-for="RollNo" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Department" class="form-label"></label>
+            <input asp-for="Department" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Semester" class="form-label"></label>
+            <input asp-for="Semester" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AdmissionYear" class="form-label"></label>
+            <input asp-for="AdmissionYear" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Phone" class="form-label"></label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Address" class="form-label"></label>
+            <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            💾 Update Student
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Back
+        </a>
+
+    </form>
+
+</div>
