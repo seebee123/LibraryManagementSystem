@@ -154,7 +154,7 @@ Follow these steps to run the project locally.
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/LibraryManagementSystem.git
+git clone https://github.com/seebee123/LibraryManagementSystem
 
 10. Author
 Developed By
