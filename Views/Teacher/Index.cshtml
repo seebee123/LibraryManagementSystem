@@ -1,0 +1,218 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.Teacher>
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2 class="text-primary">
+            👨‍🏫 Teachers Management
+        </h2>
+
+        <div>
+
+            <a asp-action="ExportExcel"
+               class="btn btn-success">
+                📄 Export Excel
+            </a>
+
+            <a asp-action="Create"
+               class="btn btn-primary">
+                ➕ Add Teacher
+            </a>
+
+        </div>
+
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+
+            @TempData["Success"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+
+        </div>
+    }
+
+    <!-- SEARCH -->
+
+    <form asp-action="Index"
+          method="get"
+          class="mb-3">
+
+        <div class="row">
+
+            <div class="col-md-8">
+
+                <input type="text"
+                       name="searchString"
+                       value="@Context.Request.Query["searchString"]"
+                       class="form-control"
+                       placeholder="Search by Employee ID, Name, Department..." />
+
+            </div>
+
+            <div class="col-md-2 d-grid">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    🔍 Search
+                </button>
+
+            </div>
+
+            <div class="col-md-2 d-grid">
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Clear
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover table-striped">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th width="220">Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+                @if (Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <span class="badge bg-primary">
+                                    @item.EmployeeId
+                                </span>
+                            </td>
+
+                            <td>
+                                <strong>@item.Name</strong>
+                            </td>
+
+                            <td>@item.Department</td>
+
+                            <td>@item.Designation</td>
+
+                            <td>@item.Email</td>
+
+                            <td>@item.Phone</td>
+
+                            <td>
+                                @if (item.Status == "Active")
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Inactive
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.TeacherId"
+                                   class="btn btn-info btn-sm">
+                                    Details
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.TeacherId"
+                                   class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.TeacherId"
+                                   class="btn btn-danger btn-sm">
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+
+                        <td colspan="8"
+                            class="text-center text-danger fw-bold">
+
+                            No teachers found.
+
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- PAGINATION -->
+    @if (ViewBag.TotalPages > 1)
+    {
+        <nav class="mt-4">
+
+            <ul class="pagination justify-content-center">
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-page="@i"
+                           asp-route-searchString="@Context.Request.Query["searchString"]">
+
+                            @i
+
+                        </a>
+
+                    </li>
+                }
+
+            </ul>
+
+        </nav>
+    }
+
+</div>

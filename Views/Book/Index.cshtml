@@ -32,10 +32,9 @@
 
     </div>
 
-    <!-- SUCCESS -->
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show">
             <strong>Success!</strong> @TempData["Success"]
 
             <button type="button"
@@ -55,17 +54,18 @@
                        name="searchString"
                        value="@Context.Request.Query["searchString"]"
                        class="form-control"
-                       placeholder="Search by Title, Author, ISBN or Category..." />
+                       placeholder="Search by Book Code, Title, Author, ISBN or Category..." />
             </div>
 
             <div class="col-md-2 d-grid">
-                <button type="submit" class="btn btn-primary">
+                <button class="btn btn-primary">
                     🔍 Search
                 </button>
             </div>
 
             <div class="col-md-2 d-grid">
-                <a asp-action="Index" class="btn btn-secondary">
+                <a asp-action="Index"
+                   class="btn btn-secondary">
                     Clear
                 </a>
             </div>
@@ -78,15 +78,18 @@
     <table class="table table-bordered table-hover table-striped">
 
         <thead class="table-dark">
+
             <tr>
+                <th>Book Code</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>ISBN</th>
                 <th>Category</th>
                 <th>Available</th>
                 <th>Status</th>
-                <th width="200">Actions</th>
+                <th width="220">Actions</th>
             </tr>
+
         </thead>
 
         <tbody>
@@ -95,12 +98,40 @@
             {
                 <tr>
 
+                    <td>
+                        <span class="badge bg-dark fs-6">
+                            @item.BookCode
+                        </span>
+                    </td>
+
                     <td>@item.Title</td>
+
                     <td>@item.Author</td>
+
                     <td>@item.ISBN</td>
+
                     <td>@item.Category</td>
-                    <td>@item.AvailableQuantity</td>
-                    <td>@item.Status</td>
+
+                    <td>
+                        @item.AvailableQuantity / @item.Quantity
+                    </td>
+
+                    <td>
+
+                        @if (item.AvailableQuantity > 0)
+                        {
+                            <span class="badge bg-success">
+                                Available
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Out of Stock
+                            </span>
+                        }
+
+                    </td>
 
                     <td>
 
@@ -133,6 +164,7 @@
 
     <!-- PAGINATION -->
     <nav class="mt-3">
+
         <ul class="pagination">
 
             @if (ViewBag.TotalPages != null)
@@ -151,6 +183,7 @@
             }
 
         </ul>
+
     </nav>
 
 </div>

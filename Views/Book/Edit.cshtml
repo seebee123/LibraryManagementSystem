@@ -12,62 +12,93 @@
 
         <input type="hidden" asp-for="BookId" />
 
+        <!-- BOOK TITLE -->
         <div class="mb-3">
             <label asp-for="Title" class="form-label"></label>
             <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
         </div>
 
+        <!-- BOOK CODE -->
+        <div class="mb-3">
+            <label asp-for="BookCode" class="form-label"></label>
+            <input asp-for="BookCode"
+                   class="form-control"
+                   placeholder="e.g. B001" />
+            <span asp-validation-for="BookCode" class="text-danger"></span>
+        </div>
+
+        <!-- AUTHOR -->
         <div class="mb-3">
             <label asp-for="Author" class="form-label"></label>
             <input asp-for="Author" class="form-control" />
+            <span asp-validation-for="Author" class="text-danger"></span>
         </div>
 
+        <!-- ISBN -->
         <div class="mb-3">
             <label asp-for="ISBN" class="form-label"></label>
             <input asp-for="ISBN" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
         </div>
 
+        <!-- CATEGORY -->
         <div class="mb-3">
             <label asp-for="Category" class="form-label"></label>
             <input asp-for="Category" class="form-control" />
+            <span asp-validation-for="Category" class="text-danger"></span>
         </div>
 
+        <!-- PUBLISHER -->
         <div class="mb-3">
             <label asp-for="Publisher" class="form-label"></label>
             <input asp-for="Publisher" class="form-control" />
+            <span asp-validation-for="Publisher" class="text-danger"></span>
         </div>
 
+        <!-- EDITION -->
         <div class="mb-3">
             <label asp-for="Edition" class="form-label"></label>
             <input asp-for="Edition" class="form-control" />
+            <span asp-validation-for="Edition" class="text-danger"></span>
         </div>
 
+        <!-- LANGUAGE -->
         <div class="mb-3">
             <label asp-for="Language" class="form-label"></label>
             <input asp-for="Language" class="form-control" />
+            <span asp-validation-for="Language" class="text-danger"></span>
         </div>
 
+        <!-- TOTAL QUANTITY -->
         <div class="mb-3">
             <label asp-for="Quantity" class="form-label"></label>
             <input asp-for="Quantity" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
         </div>
 
+        <!-- AVAILABLE QUANTITY -->
         <div class="mb-3">
             <label asp-for="AvailableQuantity" class="form-label"></label>
             <input asp-for="AvailableQuantity" class="form-control" />
+            <span asp-validation-for="AvailableQuantity" class="text-danger"></span>
         </div>
 
+        <!-- SHELF -->
         <div class="mb-3">
             <label asp-for="ShelfNo" class="form-label"></label>
             <input asp-for="ShelfNo" class="form-control" />
+            <span asp-validation-for="ShelfNo" class="text-danger"></span>
         </div>
 
+        <!-- STATUS -->
         <div class="mb-3">
             <label asp-for="Status" class="form-label"></label>
             <select asp-for="Status" class="form-select">
-                <option>Available</option>
-                <option>Unavailable</option>
+                <option value="Available">Available</option>
+                <option value="Unavailable">Unavailable</option>
             </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
         </div>
 
         <button type="submit" class="btn btn-warning">
@@ -82,7 +113,8 @@
 
 </div>
 
-@section Scripts {
+@section Scripts
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

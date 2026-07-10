@@ -1,43 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibraryManagementSystem.Data;
 using LibraryManagementSystem.Models;
-using Microsoft.EntityFrameworkCore;
 using ClosedXML.Excel;
 using System.IO;
 
 namespace LibraryManagementSystem.Controllers
 {
-    public class BookController : Controller
+    public class TeacherController : Controller
     {
         private readonly AppDbContext _context;
 
-        public BookController(AppDbContext context)
+        public TeacherController(AppDbContext context)
         {
             _context = context;
         }
 
         // ==========================
-        // LIST ALL BOOKS + SEARCH + PAGINATION
+        // LIST + SEARCH + PAGINATION
         // ==========================
         public IActionResult Index(string searchString, int page = 1)
         {
             int pageSize = 10;
 
-            var books = _context.Books.AsQueryable();
+            var teachers = _context.Teachers.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
-                books = books.Where(b =>
-                    b.BookCode.Contains(searchString) ||
-                    b.Title.Contains(searchString) ||
-                    b.Author.Contains(searchString) ||
-                    b.ISBN.Contains(searchString) ||
-                    b.Category.Contains(searchString));
+                teachers = teachers.Where(t =>
+                    t.EmployeeId.Contains(searchString) ||
+                    t.Name.Contains(searchString) ||
+                    t.Department.Contains(searchString) ||
+                    t.Designation.Contains(searchString) ||
+                    t.Email.Contains(searchString));
             }
 
-            var totalRecords = books.Count();
+            var totalRecords = teachers.Count();
 
-            var data = books
+            var data = teachers
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -55,24 +54,24 @@ namespace LibraryManagementSystem.Controllers
         {
             return View();
         }
-
         // ==========================
         // CREATE (POST)
         // ==========================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Book book)
+        public IActionResult Create(Teacher teacher)
         {
             if (ModelState.IsValid)
             {
-                _context.Books.Add(book);
+                _context.Teachers.Add(teacher);
                 _context.SaveChanges();
 
-                TempData["Success"] = "Book added successfully.";
+                TempData["Success"] = "Teacher added successfully.";
+
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(book);
+            return View(teacher);
         }
 
         // ==========================
@@ -83,12 +82,13 @@ namespace LibraryManagementSystem.Controllers
             if (id == null)
                 return NotFound();
 
-            var book = _context.Books.FirstOrDefault(x => x.BookId == id);
+            var teacher = _context.Teachers
+                .FirstOrDefault(x => x.TeacherId == id);
 
-            if (book == null)
+            if (teacher == null)
                 return NotFound();
 
-            return View(book);
+            return View(teacher);
         }
 
         // ==========================
@@ -99,12 +99,12 @@ namespace LibraryManagementSystem.Controllers
             if (id == null)
                 return NotFound();
 
-            var book = _context.Books.Find(id);
+            var teacher = _context.Teachers.Find(id);
 
-            if (book == null)
+            if (teacher == null)
                 return NotFound();
 
-            return View(book);
+            return View(teacher);
         }
 
         // ==========================
@@ -112,23 +112,23 @@ namespace LibraryManagementSystem.Controllers
         // ==========================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Book book)
+        public IActionResult Edit(int id, Teacher teacher)
         {
-            if (id != book.BookId)
+            if (id != teacher.TeacherId)
                 return NotFound();
 
             if (ModelState.IsValid)
             {
-                _context.Update(book);
+                _context.Update(teacher);
                 _context.SaveChanges();
 
-                TempData["Success"] = "Book updated successfully.";
+                TempData["Success"] = "Teacher updated successfully.";
+
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(book);
+            return View(teacher);
         }
-
         // ==========================
         // DELETE (GET)
         // ==========================
@@ -137,12 +137,13 @@ namespace LibraryManagementSystem.Controllers
             if (id == null)
                 return NotFound();
 
-            var book = _context.Books.FirstOrDefault(x => x.BookId == id);
+            var teacher = _context.Teachers
+                .FirstOrDefault(x => x.TeacherId == id);
 
-            if (book == null)
+            if (teacher == null)
                 return NotFound();
 
-            return View(book);
+            return View(teacher);
         }
 
         // ==========================
@@ -152,60 +153,51 @@ namespace LibraryManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var book = _context.Books.Find(id);
+            var teacher = _context.Teachers.Find(id);
 
-            if (book != null)
+            if (teacher != null)
             {
-                _context.Books.Remove(book);
+                _context.Teachers.Remove(teacher);
                 _context.SaveChanges();
 
-                TempData["Success"] = "Book deleted successfully.";
+                TempData["Success"] = "Teacher deleted successfully.";
             }
 
             return RedirectToAction(nameof(Index));
         }
 
         // ==========================
-        // EXPORT BOOKS TO EXCEL
+        // EXPORT TEACHERS TO EXCEL
         // ==========================
         public IActionResult ExportExcel()
         {
-            var books = _context.Books.ToList();
+            var teachers = _context.Teachers.ToList();
 
             using (var workbook = new XLWorkbook())
             {
-                var worksheet = workbook.Worksheets.Add("Books");
+                var worksheet = workbook.Worksheets.Add("Teachers");
 
-                // Header
-                worksheet.Cell(1, 1).Value = "Book Code";
-                worksheet.Cell(1, 2).Value = "Title";
-                worksheet.Cell(1, 3).Value = "Author";
-                worksheet.Cell(1, 4).Value = "ISBN";
-                worksheet.Cell(1, 5).Value = "Category";
-                worksheet.Cell(1, 6).Value = "Publisher";
-                worksheet.Cell(1, 7).Value = "Edition";
-                worksheet.Cell(1, 8).Value = "Language";
-                worksheet.Cell(1, 9).Value = "Quantity";
-                worksheet.Cell(1, 10).Value = "Available Quantity";
-                worksheet.Cell(1, 11).Value = "Shelf No";
-                worksheet.Cell(1, 12).Value = "Status";
+                worksheet.Cell(1, 1).Value = "Employee ID";
+                worksheet.Cell(1, 2).Value = "Name";
+                worksheet.Cell(1, 3).Value = "Department";
+                worksheet.Cell(1, 4).Value = "Designation";
+                worksheet.Cell(1, 5).Value = "Email";
+                worksheet.Cell(1, 6).Value = "Phone";
+                worksheet.Cell(1, 7).Value = "Address";
+                worksheet.Cell(1, 8).Value = "Status";
 
                 int row = 2;
 
-                foreach (var book in books)
+                foreach (var t in teachers)
                 {
-                    worksheet.Cell(row, 1).Value = book.BookCode;
-                    worksheet.Cell(row, 2).Value = book.Title;
-                    worksheet.Cell(row, 3).Value = book.Author;
-                    worksheet.Cell(row, 4).Value = book.ISBN;
-                    worksheet.Cell(row, 5).Value = book.Category;
-                    worksheet.Cell(row, 6).Value = book.Publisher;
-                    worksheet.Cell(row, 7).Value = book.Edition;
-                    worksheet.Cell(row, 8).Value = book.Language;
-                    worksheet.Cell(row, 9).Value = book.Quantity;
-                    worksheet.Cell(row, 10).Value = book.AvailableQuantity;
-                    worksheet.Cell(row, 11).Value = book.ShelfNo;
-                    worksheet.Cell(row, 12).Value = book.Status;
+                    worksheet.Cell(row, 1).Value = t.EmployeeId;
+                    worksheet.Cell(row, 2).Value = t.Name;
+                    worksheet.Cell(row, 3).Value = t.Department;
+                    worksheet.Cell(row, 4).Value = t.Designation;
+                    worksheet.Cell(row, 5).Value = t.Email;
+                    worksheet.Cell(row, 6).Value = t.Phone;
+                    worksheet.Cell(row, 7).Value = t.Address;
+                    worksheet.Cell(row, 8).Value = t.Status;
 
                     row++;
                 }
@@ -219,7 +211,8 @@ namespace LibraryManagementSystem.Controllers
                     return File(
                         stream.ToArray(),
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "LibraryBooks.xlsx");
+                        "Teachers.xlsx"
+                    );
                 }
             }
         }

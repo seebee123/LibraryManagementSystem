@@ -7,6 +7,11 @@ namespace LibraryManagementSystem.Models
         [Key]
         public int BookId { get; set; }
 
+        // ✅ NEW BOOK CODE
+        [Required]
+        [StringLength(10)]
+        public string BookCode { get; set; } = string.Empty;
+
         [Required]
         [StringLength(150)]
         public string Title { get; set; } = string.Empty;

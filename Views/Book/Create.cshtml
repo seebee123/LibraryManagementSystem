@@ -16,6 +16,15 @@
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
 
+        <!-- BOOK CODE -->
+        <div class="mb-3">
+            <label asp-for="BookCode" class="form-label"></label>
+            <input asp-for="BookCode"
+                   class="form-control"
+                   placeholder="Enter Book Code (e.g. B001)" />
+            <span asp-validation-for="BookCode" class="text-danger"></span>
+        </div>
+
         <div class="mb-3">
             <label asp-for="Author" class="form-label"></label>
             <input asp-for="Author" class="form-control" />

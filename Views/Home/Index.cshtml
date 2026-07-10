@@ -4,31 +4,30 @@
 
 <style>
 
-    /* ===== ANIMATION ===== */
     .card {
-        transition: 0.3s;
-        border-radius: 12px;
+        transition: .3s ease;
+        border-radius: 15px;
+        border: none;
     }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(0,0,0,.18);
         }
 
-    /* ===== DARK MODE ===== */
+    body {
+        transition: .3s;
+    }
+
     .dark-mode {
-        background-color: #1e1e1e;
+        background: #1e1e1e;
         color: white;
     }
 
         .dark-mode .card {
-            background-color: #2c2c2c;
+            background: #2c2c2c;
             color: white;
         }
-
-    body {
-        transition: 0.3s;
-    }
 
     .user-info {
         display: flex;
@@ -41,15 +40,26 @@
         font-weight: 600;
     }
 
+    .card h5 {
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .card h2 {
+        font-size: 34px;
+        font-weight: bold;
+    }
+
 </style>
 
-<!-- Bootstrap Icons -->
 <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <div class="container mt-4">
 
-    <!-- TOP BAR -->
+    <!-- HEADER -->
+
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <h2 class="fw-bold">
@@ -66,55 +76,94 @@
             <button class="btn btn-danger"
                     data-bs-toggle="modal"
                     data-bs-target="#logoutModal">
+
                 <i class="bi bi-box-arrow-right"></i>
                 Logout
+
             </button>
 
         </div>
 
     </div>
+    <!-- DASHBOARD CARDS -->
 
-    <!-- STATS CARDS -->
     <div class="row">
 
-        <div class="col-md-3 mb-3">
+        <div class="col-lg-3 col-md-6 mb-3">
             <div class="card bg-primary text-white p-3">
                 <h5>📚 Books</h5>
                 <h2>@ViewBag.TotalBooks</h2>
             </div>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-lg-3 col-md-6 mb-3">
             <div class="card bg-success text-white p-3">
                 <h5>👨‍🎓 Students</h5>
                 <h2>@ViewBag.TotalStudents</h2>
             </div>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-info text-white p-3">
+                <h5>👨‍🏫 Teachers</h5>
+                <h2>@ViewBag.TotalTeachers</h2>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
             <div class="card bg-warning text-dark p-3">
-                <h5>📖 Issued</h5>
+                <h5>📖 Total Issued</h5>
                 <h2>@ViewBag.IssuedBooks</h2>
             </div>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-secondary text-white p-3">
+                <h5>👨‍🎓 Student Issues</h5>
+                <h2>@ViewBag.StudentIssues</h2>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-dark text-white p-3">
+                <h5>👨‍🏫 Teacher Issues</h5>
+                <h2>@ViewBag.TeacherIssues</h2>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
             <div class="card bg-danger text-white p-3">
+                <h5>🔴 Overdue Books</h5>
+                <h2>@ViewBag.OverdueBooks</h2>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-success text-white p-3">
                 <h5>🔄 Returned</h5>
                 <h2>@ViewBag.ReturnedBooks</h2>
             </div>
         </div>
 
     </div>
+    <!-- TOTAL FINE -->
 
-    <!-- FINE -->
     <div class="row mt-3">
 
-        <div class="col-md-4">
-            <div class="card p-4">
-                <h5>💰 Total Fine Collected</h5>
-                <h2 class="text-danger">₹ @ViewBag.TotalFine</h2>
+        <div class="col-lg-4 mb-3">
+
+            <div class="card border-start border-5 border-danger shadow-sm p-4">
+
+                <h5>
+                    💰 Total Fine Collected
+                </h5>
+
+                <h2 class="text-danger fw-bold">
+                    ₹ @ViewBag.TotalFine
+                </h2>
+
             </div>
+
         </div>
 
     </div>
@@ -122,76 +171,154 @@
     <hr />
 
     <!-- QUICK ACTIONS -->
-    <h4>⚡ Quick Actions</h4>
 
-    <a class="btn btn-primary m-1" href="/Student/Create">➕ Add Student</a>
-    <a class="btn btn-success m-1" href="/Book/Create">📚 Add Book</a>
-    <a class="btn btn-warning m-1" href="/IssueBook/Create">📖 Issue Book</a>
+    <h4 class="fw-bold mb-3">
+        ⚡ Quick Actions
+    </h4>
 
-    <a class="btn btn-dark m-1" href="/Student">👨‍🎓 View Students</a>
-    <a class="btn btn-dark m-1" href="/Book">📚 View Books</a>
-    <a class="btn btn-dark m-1" href="/IssueBook">📊 Issued Records</a>
-    <a class="btn btn-success m-1" href="/Book/ExportExcel">
-        📄 Export Books
-    </a>
-    <a class="btn btn-primary m-1" href="/Student/ExportExcel">
-        📄 Export Students
-    </a>
+    <div class="mb-4">
 
-</div>
-<!-- Logout Confirmation Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+        <!-- CREATE -->
 
-    <div class="modal-dialog modal-dialog-centered">
+        <a class="btn btn-primary m-1"
+           href="/Student/Create">
+            ➕ Add Student
+        </a>
 
-        <div class="modal-content shadow-lg border-0">
+        <a class="btn btn-success m-1"
+           href="/Teacher/Create">
+            👨‍🏫 Add Teacher
+        </a>
 
-            <div class="modal-header bg-danger text-white">
+        <a class="btn btn-warning m-1"
+           href="/Book/Create">
+            📚 Add Book
+        </a>
 
-                <h5 class="modal-title">
-                    <i class="bi bi-exclamation-triangle-fill"></i>
-                    Confirm Logout
-                </h5>
+        <a class="btn btn-danger m-1"
+           href="/IssueBook/Create">
+            📖 Issue Book
+        </a>
 
-                <button type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal">
-                </button>
+        <br /><br />
 
-            </div>
+        <!-- VIEW -->
 
-            <div class="modal-body text-center">
+        <a class="btn btn-dark m-1"
+           href="/Student">
+            👨‍🎓 View Students
+        </a>
 
-                <i class="bi bi-box-arrow-right text-danger"
-                   style="font-size:65px;"></i>
+        <a class="btn btn-dark m-1"
+           href="/Teacher">
+            👨‍🏫 View Teachers
+        </a>
 
-                <h4 class="mt-3">Logout?</h4>
+        <a class="btn btn-dark m-1"
+           href="/Book">
+            📚 View Books
+        </a>
 
-                <p class="text-muted">
-                    Are you sure you want to logout from the Library Management System?
-                </p>
+        <a class="btn btn-dark m-1"
+           href="/IssueBook">
+            📊 Issued Records
+        </a>
 
-            </div>
+        <a class="btn btn-danger m-1"
+           href="/IssueBook/Overdue">
+            🔴 Overdue Books
+        </a>
 
-            <div class="modal-footer justify-content-center">
+        <br /><br />
 
-                <button class="btn btn-secondary"
-                        data-bs-dismiss="modal">
-                    No
-                </button>
+        <!-- EXPORT -->
 
-                <a asp-controller="Login"
-                   asp-action="Logout"
-                   class="btn btn-danger">
-                    Yes, Logout
-                </a>
+        <a class="btn btn-success m-1"
+           href="/Book/ExportExcel">
+            📄 Export Books
+        </a>
+
+        <a class="btn btn-primary m-1"
+           href="/Student/ExportExcel">
+            📄 Export Students
+        </a>
+
+        <a class="btn btn-info m-1"
+           href="/Teacher/ExportExcel">
+            📄 Export Teachers
+        </a>
+
+    </div>
+    <!-- LOGOUT MODAL -->
+
+    <div class="modal fade"
+         id="logoutModal"
+         tabindex="-1"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content shadow-lg border-0">
+
+                <div class="modal-header bg-danger text-white">
+
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        Confirm Logout
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <i class="bi bi-box-arrow-right text-danger"
+                       style="font-size:70px;"></i>
+
+                    <h3 class="mt-3 fw-bold">
+                        Logout?
+                    </h3>
+
+                    <p class="text-muted">
+
+                        Are you sure you want to logout from the
+                        <br />
+                        <strong>Library Management System</strong>?
+
+                    </p>
+
+                </div>
+
+                <div class="modal-footer justify-content-center">
+
+                    <button class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+
+                        Cancel
+
+                    </button>
+
+                    <a asp-controller="Login"
+                       asp-action="Logout"
+                       class="btn btn-danger">
+
+                        <i class="bi bi-box-arrow-right"></i>
+
+                        Yes, Logout
+
+                    </a>
+
+                </div>
 
             </div>
 
         </div>
 
     </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

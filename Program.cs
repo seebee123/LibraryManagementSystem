@@ -1,4 +1,5 @@
 using LibraryManagementSystem.Data;
+using LibraryManagementSystem.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem
@@ -12,21 +13,31 @@ namespace LibraryManagementSystem
             // =========================
             // SERVICES
             // =========================
+
+            // MVC
             builder.Services.AddControllersWithViews();
 
-            // DB CONNECTION
+            // Database Connection
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // ✅ SESSION ENABLE (IMPORTANT FIX)
+            // Session
             builder.Services.AddSession();
+
+            // Email Service
+            builder.Services.AddScoped<IEmailService, EmailService>();
+
+            // =========================
+            // BUILD APP
+            // =========================
 
             var app = builder.Build();
 
             // =========================
-            // MIDDLEWARE PIPELINE
+            // MIDDLEWARE
             // =========================
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -34,16 +45,19 @@ namespace LibraryManagementSystem
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            // ✅ SESSION MIDDLEWARE (IMPORTANT FIX)
             app.UseSession();
 
             app.UseAuthorization();
 
+            // =========================
             // ROUTES
+            // =========================
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

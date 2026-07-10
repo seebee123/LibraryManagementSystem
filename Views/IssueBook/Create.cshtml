@@ -4,57 +4,255 @@
     ViewData["Title"] = "Issue Book";
 }
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet" />
+
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css"
+      rel="stylesheet" />
+
 <div class="container mt-4">
 
-    <h2 class="text-success mb-4">📖 Issue Book</h2>
+    <h2 class="text-success mb-4">
+        📖 Issue Book
+    </h2>
 
     <form asp-action="Create" method="post">
 
+        <!-- Issue Type -->
+
         <div class="mb-3">
-            <label class="form-label">Select Student</label>
-            <select asp-for="StudentId" class="form-control">
-                <option value="">-- Select Student --</option>
+
+            <label class="form-label fw-bold">
+                Issue Type
+            </label>
+
+            <div>
+
+                <input type="radio"
+                       asp-for="IssueType"
+                       value="Student"
+                       checked
+                       onclick="toggleIssueType()" />
+
+                <label class="me-4">
+                    👨‍🎓 Student
+                </label>
+
+                <input type="radio"
+                       asp-for="IssueType"
+                       value="Teacher"
+                       onclick="toggleIssueType()" />
+
+                <label>
+                    👨‍🏫 Teacher
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- Student -->
+
+        <div class="mb-3" id="studentDiv">
+
+            <label class="form-label">
+                Select Student
+            </label>
+
+            <select asp-for="StudentId"
+                    id="StudentId"
+                    class="form-select">
+
+                <option value="">
+                    🔍 Search Student...
+                </option>
+
                 @foreach (var s in ViewBag.Students)
                 {
-                    <option value="@s.StudentId">@s.Name</option>
+                    <option value="@s.StudentId">
+                        @s.RollNo - @s.Name
+                    </option>
                 }
+
             </select>
+
         </div>
 
+        <!-- Teacher -->
+
+        <div class="mb-3"
+             id="teacherDiv"
+             style="display:none;">
+
+            <label class="form-label">
+                Select Teacher
+            </label>
+
+            <select asp-for="TeacherId"
+                    id="TeacherId"
+                    class="form-select">
+
+                <option value="">
+                    🔍 Search Teacher...
+                </option>
+
+                @foreach (var t in ViewBag.Teachers)
+                {
+                    <option value="@t.TeacherId">
+                        @t.EmployeeId - @t.Name
+                    </option>
+                }
+
+            </select>
+
+        </div>
+
+        <!-- Book -->
+
         <div class="mb-3">
-            <label class="form-label">Select Book</label>
-            <select asp-for="BookId" class="form-control">
-                <option value="">-- Select Book --</option>
+
+            <label class="form-label">
+                Select Book
+            </label>
+
+            <select asp-for="BookId"
+                    id="BookId"
+                    class="form-select">
+
+                <option value="">
+                    🔍 Search Book by Code...
+                </option>
+
                 @foreach (var b in ViewBag.Books)
                 {
-                    <option value="@b.BookId">@b.Title</option>
+                    <option value="@b.BookId">
+                        @b.BookCode - @b.Title
+                    </option>
                 }
+
             </select>
+
         </div>
+
+        <!-- Issue Date -->
 
         <div class="mb-3">
-            <label class="form-label">Issue Date</label>
-            <input asp-for="IssueDate" type="date" class="form-control" />
+
+            <label class="form-label">
+                Issue Date
+            </label>
+
+            <input asp-for="IssueDate"
+                   type="date"
+                   class="form-control" />
+
         </div>
+
+        <!-- Due Date -->
 
         <div class="mb-3">
-            <label class="form-label">Due Date</label>
-            <input asp-for="DueDate" type="date" class="form-control" />
+
+            <label class="form-label">
+                Due Date
+            </label>
+
+            <input asp-for="DueDate"
+                   type="date"
+                   class="form-control" />
+
         </div>
+
+        <!-- Status -->
 
         <div class="mb-3">
-            <label class="form-label">Status</label>
-            <input asp-for="Status" class="form-control" value="Issued" readonly />
+
+            <label class="form-label">
+                Status
+            </label>
+
+            <input asp-for="Status"
+                   class="form-control"
+                   value="Issued"
+                   readonly />
+
         </div>
 
-        <button type="submit" class="btn btn-success">
+        <button type="submit"
+                class="btn btn-success">
+
             📚 Issue Book
+
         </button>
 
-        <a asp-action="Index" class="btn btn-secondary">
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
             Back
+
         </a>
 
     </form>
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+
+    function toggleIssueType() {
+
+    let type = document.querySelector(
+    'input[name="IssueType"]:checked'
+    ).value;
+
+    if (type === "Student") {
+
+    document.getElementById("studentDiv").style.display = "block";
+    document.getElementById("teacherDiv").style.display = "none";
+
+    }
+    else {
+
+    document.getElementById("studentDiv").style.display = "none";
+    document.getElementById("teacherDiv").style.display = "block";
+
+    }
+
+    }
+
+    $(document).ready(function () {
+
+    $("#StudentId").select2({
+
+    theme: "bootstrap-5",
+    width: "100%",
+    placeholder: "🔍 Search Student by Roll No or Name",
+    allowClear: true
+
+    });
+
+    $("#TeacherId").select2({
+
+    theme: "bootstrap-5",
+    width: "100%",
+    placeholder: "🔍 Search Teacher by Employee ID or Name",
+    allowClear: true
+
+    });
+
+    $("#BookId").select2({
+
+    theme: "bootstrap-5",
+    width: "100%",
+    placeholder: "🔍 Search Book Code or Title",
+    allowClear: true
+
+    });
+
+    toggleIssueType();
+
+    });
+
+</script>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<LibraryManagementSystem.Models.IssueBook>
 
 @{
-    ViewData["Title"] = "Issued Books";
+    ViewData["Title"] = "Overdue Books";
 }
 
 <link rel="stylesheet"
@@ -9,51 +9,24 @@
 
 <div class="container mt-4">
 
-    <!-- HEADER -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h2 class="text-primary fw-bold">
-            📚 Issued Books List
+        <h2 class="text-danger fw-bold">
+            🔴 Overdue Books
         </h2>
 
-        <div>
+        <a asp-action="Index"
+           class="btn btn-secondary">
 
-            <a asp-action="ExportExcel"
-               class="btn btn-success me-2">
+            ← Back to Issued Books
 
-                <i class="bi bi-file-earmark-excel-fill"></i>
-                Export Excel
-
-            </a>
-
-            <a asp-action="Create"
-               class="btn btn-primary">
-
-                ➕ Issue New Book
-
-            </a>
-
-        </div>
+        </a>
 
     </div>
 
-    <!-- SUCCESS MESSAGE -->
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show">
-
-            <strong>Success!</strong>
-            @TempData["Success"]
-
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert">
-            </button>
-
-        </div>
-    }
-    <!-- SEARCH -->
-    <form asp-action="Index" method="get" class="mb-4">
+    <form asp-action="Overdue"
+          method="get"
+          class="mb-4">
 
         <div class="row">
 
@@ -63,28 +36,35 @@
                        name="searchString"
                        value="@Context.Request.Query["searchString"]"
                        class="form-control"
-                       placeholder="🔍 Search by Student, Teacher, Book or Status..." />
+                       placeholder="Search Student, Teacher or Book..." />
 
             </div>
 
             <div class="col-md-2 d-grid">
-                <button type="submit" class="btn btn-primary">
+
+                <button class="btn btn-primary">
+
                     Search
+
                 </button>
+
             </div>
 
             <div class="col-md-2 d-grid">
-                <a asp-action="Index"
+
+                <a asp-action="Overdue"
                    class="btn btn-secondary">
+
                     Clear
+
                 </a>
+
             </div>
 
         </div>
 
     </form>
 
-    <!-- TABLE -->
     <div class="table-responsive">
 
         <table class="table table-bordered table-hover table-striped">
@@ -96,22 +76,24 @@
                     <th>Issue Type</th>
                     <th>Issued To</th>
                     <th>Book</th>
-                    <th>Issue Date</th>
                     <th>Due Date</th>
-                    <th>Return Date</th>
-                    <th>Fine (₹)</th>
+                    <th>Late Days</th>
+                                        <th>Fine (₹)</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th>Action</th>
 
                 </tr>
 
             </thead>
 
             <tbody>
-                                @if (Model.Any())
+
+                @if (Model != null && Model.Any())
                 {
                     foreach (var item in Model)
                     {
+                        var lateDays = (DateTime.Now.Date - item.DueDate.Date).Days;
+
                         <tr>
 
                             <td>
@@ -157,64 +139,59 @@
                             </td>
 
                             <td>
+
                                 @item.Book?.Title
+
                             </td>
 
                             <td>
-                                @item.IssueDate.ToString("dd-MM-yyyy")
-                            </td>
 
-                            <td>
                                 @item.DueDate.ToString("dd-MM-yyyy")
-                            </td>
-                            <td>
-
-                                @(item.ReturnDate.HasValue
-                                    ? item.ReturnDate.Value.ToString("dd-MM-yyyy")
-                                    : "-")
 
                             </td>
 
                             <td>
+
+                                <span class="badge bg-danger">
+
+                                    @lateDays Days
+
+                                </span>
+
+                            </td>
+                            <td>
+
                                 ₹ @item.Fine
-                            </td>
-
-                            <td>
-
-                                @if (item.Status == "Issued")
-                                {
-                                    <span class="badge bg-danger">
-                                        Issued
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-success">
-                                        Returned
-                                    </span>
-                                }
 
                             </td>
 
                             <td>
 
-                                @if (item.Status == "Issued")
-                                {
-                                    <a asp-action="Return"
-                                       asp-route-id="@item.IssueId"
-                                       class="btn btn-warning btn-sm">
+                                <span class="badge bg-danger">
 
-                                        Return
+                                    Overdue
 
-                                    </a>
-                                }
+                                </span>
 
-                                <a asp-action="Delete"
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Return"
                                    asp-route-id="@item.IssueId"
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Are you sure you want to delete?')">
+                                   class="btn btn-warning btn-sm mb-1">
 
-                                    Delete
+                                    🔄 Return
+
+                                </a>
+
+                                <br />
+
+                                <a asp-action="SendReminder"
+                                   asp-route-id="@item.IssueId"
+                                   class="btn btn-primary btn-sm mt-1">
+
+                                    📧 Send Reminder
 
                                 </a>
 
@@ -225,16 +202,18 @@
                 }
                 else
                 {
+
                     <tr>
 
-                        <td colspan="9"
+                        <td colspan="8"
                             class="text-center text-danger fw-bold">
 
-                            No records found.
+                            No overdue books found.
 
                         </td>
 
                     </tr>
+
                 }
 
             </tbody>
@@ -242,7 +221,6 @@
         </table>
 
     </div>
-
     <!-- PAGINATION -->
     <div class="d-flex justify-content-center mt-3">
 
@@ -255,12 +233,12 @@
                     <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
 
                         <a class="page-link"
-                           href="@Url.Action("Index",
-                                                      new
-                                                      {
-                                                          page = i,
-                                                          searchString = Context.Request.Query["searchString"]
-                                                      })">
+                           href="@Url.Action("Overdue",
+                                                          new
+                                                          {
+                                                              page = i,
+                                                              searchString = Context.Request.Query["searchString"]
+                                                          })">
 
                             @i
 

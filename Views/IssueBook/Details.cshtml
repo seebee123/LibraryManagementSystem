@@ -6,65 +6,183 @@
 
 <div class="container mt-4">
 
-    <h2 class="text-info mb-4">📖 Issue Book Details</h2>
+    <div class="card shadow">
 
-    <div class="card shadow-sm p-4">
+        <div class="card-header bg-primary text-white">
 
-        <div class="row mb-2">
-            <div class="col-md-3"><strong>Student Name:</strong></div>
-            <div class="col-md-9">@Model.Student?.Name</div>
+            <h3 class="mb-0">
+                📖 Issue Details
+            </h3>
+
         </div>
 
-        <div class="row mb-2">
-            <div class="col-md-3"><strong>Book Title:</strong></div>
-            <div class="col-md-9">@Model.Book?.Title</div>
-        </div>
+        <div class="card-body">
 
-        <div class="row mb-2">
-            <div class="col-md-3"><strong>Issue Date:</strong></div>
-            <div class="col-md-9">@Model.IssueDate.ToShortDateString()</div>
-        </div>
+            <!-- Issue Type -->
+            <div class="row mb-3">
 
-        <div class="row mb-2">
-            <div class="col-md-3"><strong>Due Date:</strong></div>
-            <div class="col-md-9">@Model.DueDate.ToShortDateString()</div>
-        </div>
+                <div class="col-md-3 fw-bold">
+                    Issue Type
+                </div>
 
-        <div class="row mb-2">
-            <div class="col-md-3"><strong>Return Date:</strong></div>
-            <div class="col-md-9">
-                @(Model.ReturnDate.HasValue
-                    ? Model.ReturnDate.Value.ToShortDateString()
-                    : "Not Returned")
+                <div class="col-md-9">
+
+                    @if (Model.IssueType == "Student")
+                    {
+                        <span class="badge bg-primary">
+                            👨‍🎓 Student
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">
+                            👨‍🏫 Teacher
+                        </span>
+                    }
+
+                </div>
+
             </div>
-        </div>
 
-        <div class="row mb-2">
-            <div class="col-md-3"><strong>Fine:</strong></div>
-            <div class="col-md-9">₹ @Model.Fine</div>
-        </div>
+            <!-- Issued To -->
+            <div class="row mb-3">
 
-        <div class="row mb-2">
-            <div class="col-md-3"><strong>Status:</strong></div>
-            <div class="col-md-9">
-                @if (Model.Status == "Issued")
-                {
-                    <span class="text-danger">Issued</span>
-                }
-                else
-                {
-                    <span class="text-success">Returned</span>
-                }
+                <div class="col-md-3 fw-bold">
+                    Issued To
+                </div>
+
+                <div class="col-md-9">
+
+                    @if (Model.IssueType == "Student")
+                    {
+                        <strong>@Model.Student?.Name</strong>
+
+                        <br />
+
+                        <small class="text-muted">
+                            Roll No :
+                            @Model.Student?.RollNo
+                        </small>
+                    }
+                    else
+                    {
+                        <strong>@Model.Teacher?.Name</strong>
+
+                        <br />
+
+                        <small class="text-muted">
+                            Employee ID :
+                            @Model.Teacher?.EmployeeId
+                        </small>
+                    }
+
+                </div>
+
             </div>
+
+            <!-- Book -->
+            <div class="row mb-3">
+
+                <div class="col-md-3 fw-bold">
+                    Book
+                </div>
+
+                <div class="col-md-9">
+                    @Model.Book?.Title
+                </div>
+
+            </div>
+
+            <!-- Issue Date -->
+            <div class="row mb-3">
+
+                <div class="col-md-3 fw-bold">
+                    Issue Date
+                </div>
+
+                <div class="col-md-9">
+                    @Model.IssueDate.ToString("dd-MM-yyyy")
+                </div>
+
+            </div>
+
+            <!-- Due Date -->
+            <div class="row mb-3">
+
+                <div class="col-md-3 fw-bold">
+                    Due Date
+                </div>
+
+                <div class="col-md-9">
+                    @Model.DueDate.ToString("dd-MM-yyyy")
+                </div>
+
+            </div>
+
+            <!-- Return Date -->
+            <div class="row mb-3">
+
+                <div class="col-md-3 fw-bold">
+                    Return Date
+                </div>
+
+                <div class="col-md-9">
+
+                    @(Model.ReturnDate.HasValue
+                        ? Model.ReturnDate.Value.ToString("dd-MM-yyyy")
+                        : "Not Returned")
+
+                </div>
+
+            </div>
+
+            <!-- Fine -->
+            <div class="row mb-3">
+
+                <div class="col-md-3 fw-bold">
+                    Fine
+                </div>
+
+                <div class="col-md-9">
+                    ₹ @Model.Fine
+                </div>
+
+            </div>
+
+            <!-- Status -->
+            <div class="row mb-4">
+
+                <div class="col-md-3 fw-bold">
+                    Status
+                </div>
+
+                <div class="col-md-9">
+
+                    @if (Model.Status == "Issued")
+                    {
+                        <span class="badge bg-danger">
+                            Issued
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">
+                            Returned
+                        </span>
+                    }
+
+                </div>
+
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                ← Back
+
+            </a>
+
         </div>
-
-    </div>
-
-    <div class="mt-3">
-
-        <a asp-action="Index" class="btn btn-secondary">
-            Back
-        </a>
 
     </div>
 
