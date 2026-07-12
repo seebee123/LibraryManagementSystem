@@ -1,162 +1,270 @@
 # 📚 Library Management System
 
-A complete **Library Management System** developed using **ASP.NET Core MVC** that helps manage books, students, teachers, issue/return operations, fine calculation, reminders, and reports efficiently.
+A modern and responsive **Library Management System** built using **ASP.NET Core MVC**, **Entity Framework Core**, and **SQL Server**.
 
-The system provides a user-friendly dashboard with secure authentication and complete CRUD operations for managing library activities.
-
----
-
-# 📌 Project Description
-
-The Library Management System is designed to automate traditional library operations and reduce manual work.
-
-The application allows administrators to:
-
-- Manage library books
-- Manage students and teachers
-- Issue and return books
-- Track overdue books
-- Calculate fines automatically
-- Send email reminders
-- Export data into Excel
-- Monitor library activities through dashboard
-
-The project follows MVC architecture with Entity Framework Core for database management.
+This project helps librarians manage books, students, teachers, issued books, overdue books, and fines through a clean and interactive dashboard.
 
 ---
 
-# 🚀 Features
-
-## 🔐 Authentication
-✅ Secure Admin Login  
-✅ Session Based Authentication  
-✅ Logout Functionality  
-
----
+# ✨ Features
 
 ## 📊 Dashboard
 
-✅ Total Books Count  
-✅ Total Students Count  
-✅ Issued Books Tracking  
-✅ Overdue Books Monitoring  
-
----
-
-## 👨‍🎓 Student Management
-
-✅ Add Student  
-✅ Update Student  
-✅ Delete Student  
-✅ View Student Details  
-✅ Search Students  
-
----
-
-## 👨‍🏫 Teacher Management
-
-✅ Add Teacher  
-✅ Update Teacher  
-✅ Delete Teacher  
-✅ Manage Teacher Records  
+- Professional Admin Dashboard
+- Live Date & Time
+- System Online Status
+- Dashboard Statistics
+- Dark Theme
+- Header Color Customization
+- Responsive Design
 
 ---
 
 ## 📚 Book Management
 
-✅ Add Books  
-✅ Update Books  
-✅ Delete Books  
-✅ Search Books  
-✅ Unique Book Code Generation  
-✅ Book Availability Tracking  
+- Add Book
+- Edit Book
+- Delete Book
+- View Books
+- Export Books to Excel
 
 ---
 
-## 📖 Issue & Return Module
+## 👨‍🎓 Student Management
 
-✅ Issue Books To Students  
-✅ Return Books  
-✅ Track Issue Date  
-✅ Track Return Date  
-✅ Maintain Issue History  
+- Add Student
+- Edit Student
+- Delete Student
+- View Students
+- Export Students to Excel
+
+---
+
+## 👨‍🏫 Teacher Management
+
+- Add Teacher
+- Edit Teacher
+- Delete Teacher
+- View Teachers
+- Export Teachers to Excel
+
+---
+
+## 📖 Book Issue Module
+
+- Issue Book
+- Return Book
+- Issued Records
+- Student Issues
+- Teacher Issues
+- Overdue Books
 
 ---
 
 ## 💰 Fine Management
 
-✅ Automatic Fine Calculation  
-✅ Overdue Book Detection  
-✅ Pending Return Tracking  
+- Calculate Fine
+- Total Fine Collection
+- Fine Dashboard Card
 
 ---
 
-## 📧 Email Reminder
+## 🔐 Authentication
 
-✅ Overdue Book Email Notification  
-✅ Automated Reminder System  
-
----
-
-## 📊 Reports & Export
-
-✅ Excel Export  
-✅ Data Reports  
-✅ Library Records Management  
+- Admin Login
+- Secure Logout
+- Logout Confirmation Popup
+- Session Management
 
 ---
 
-## 🎨 User Interface
+# 🛠 Technology Stack
 
-✅ Bootstrap 5 Responsive Design  
-✅ Clean Dashboard UI  
-✅ Search Functionality  
-✅ Pagination Support  
-
----
-
-# 🛠 Technologies Used
-
-### Backend
-
-- ASP.NET Core MVC
-- C#
-- Entity Framework Core
-
-### Database
-
-- SQL Server
-
-### Frontend
-
-- HTML5
-- CSS3
-- Bootstrap 5
-- JavaScript
-
-### Libraries
-
-- ClosedXML (Excel Export)
-- MailKit (Email Service)
-
-### Development Tools
-
-- Visual Studio 2022
-- Git
-- GitHub
+| Technology | Version |
+|------------|----------|
+| ASP.NET Core MVC | .NET |
+| C# | Latest |
+| SQL Server | LocalDB |
+| Entity Framework Core | Latest |
+| Bootstrap | 5 |
+| HTML5 | ✔ |
+| CSS3 | ✔ |
+| JavaScript | ✔ |
 
 ---
 
-# ⚙️ Database Setup
+# 📂 Project Structure
 
-Follow these steps to run the project locally.
+```
+LibraryManagementSystem
+│
+├── Controllers
+│
+├── Models
+│
+├── Views
+│
+├── Data
+│
+├── Migrations
+│
+├── wwwroot
+│
+├── appsettings.json
+│
+├── Program.cs
+│
+└── README.md
+```
 
-### 1. Clone Repository
+---
+
+# 📈 Dashboard Modules
+
+- 📚 Total Books
+- 👨‍🎓 Total Students
+- 👨‍🏫 Total Teachers
+- 📖 Total Issued Books
+- 👨‍🎓 Student Issues
+- 👨‍🏫 Teacher Issues
+- 🔴 Overdue Books
+- 🔄 Returned Books
+- 💰 Total Fine Collected
+
+---
+
+# 🚀 Quick Actions
+
+- Add Student
+- Add Teacher
+- Add Book
+- Issue Book
+- View Students
+- View Teachers
+- View Books
+- View Issued Records
+- Export Excel Reports
+
+---
+
+# 🎨 UI Features
+
+- Responsive Dashboard
+- Modern Cards
+- Hover Animations
+- Dark Mode
+- Header Color Themes
+- Bootstrap Icons
+- Professional Layout
+
+---
+
+# 🖥 Database
+
+Database Used
+
+```
+SQL Server LocalDB
+```
+
+Entity Framework Core is used for:
+
+- Database Connection
+- Migrations
+- CRUD Operations
+
+---
+
+# ▶️ How to Run
+
+### Clone Repository
 
 ```bash
-git clone https://github.com/seebee123/LibraryManagementSystem
+git clone https://github.com/yourusername/LibraryManagementSystem.git
+```
 
-10. Author
-Developed By
-Seebee BCA Student
+---
 
+### Open Project
+
+Open using
+
+```
+Visual Studio 2022
+```
+
+---
+
+### Restore Packages
+
+```
+Restore NuGet Packages
+```
+
+---
+
+### Update Database
+
+```powershell
+Update-Database
+```
+
+---
+
+### Run Project
+
+Press
+
+```
+F5
+```
+
+or
+
+```
+Ctrl + F5
+```
+
+---
+
+
+# 📋 Future Improvements
+
+- PDF Export
+- Barcode Scanner
+- Email Notifications
+- Multi Admin
+- Student Portal
+- Fine Payment Gateway
+- Cloud Deployment
+
+---
+
+# 👨‍💻 Author
+
+**Seebee**
+
+BCA Student
+
+ASP.NET Core MVC Developer
+
+Python Developer
+
+AI Enthusiast
+
+GitHub:
+https://github.com/seebee123
+
+---
+
+# ⭐ If you like this project
+
+Please consider giving this repository a **Star ⭐**
+
+It motivates me to build more amazing projects.
+
+---
+
+# 📄 License
+
+This project is created for educational purposes.
