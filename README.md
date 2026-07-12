@@ -267,4 +267,8 @@ It motivates me to build more amazing projects.
 
 # 📄 License
 
+<<<<<<< HEAD
 This project is created for educational purposes.
+=======
+This project is created for educational purposes.
+>>>>>>> 8918ca6f84c1b133075cc5a71063adaa726952fc
